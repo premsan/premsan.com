@@ -1,5 +1,8 @@
 plugins {
-    id("java")
+    id("java-library")
+    id("maven-publish")
+    id("com.diffplug.spotless")
+
 }
 
 group = "com.premsan"
