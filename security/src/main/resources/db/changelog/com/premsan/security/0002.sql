@@ -40,6 +40,7 @@ CREATE TABLE users (
 	id CHAR(36) NOT NULL,
     version INT NOT NULL,
 	email VARCHAR(256) NOT NULL,
+	disabled BOOLEAN DEFAULT FALSE NOT NULL,
 	updated_at BIGINT NOT NULL,
     updated_by CHAR(36) NOT NULL,
     CONSTRAINT users_pk PRIMARY KEY (id)
@@ -49,8 +50,8 @@ CREATE UNIQUE INDEX users_idx1 ON users (email);
 
 CREATE TABLE user_roles (
 	id CHAR(36) NOT NULL,
-    version INT NOT NULL,
-    user_id CHAR(36) NOT NULL,
+	version INT NOT NULL,
+	user_id CHAR(36) NOT NULL,
 	role_id CHAR(36) NOT NULL,
 	updated_at BIGINT NOT NULL,
     updated_by CHAR(36) NOT NULL,

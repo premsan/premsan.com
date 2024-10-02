@@ -59,12 +59,20 @@ public class SecurityConfiguration {
 
             User user = userRepository.findByEmailIgnoreCase(email);
 
+            if (user != null) {
+
+                if (Boolean.TRUE.equals(user.getDisabled())) {
+
+                    throw new DisabledException("User is disabled");
+                }
+            }
             if (user == null) {
 
                 final String userId = UUID.randomUUID().toString();
                 user = new User();
                 user.setId(userId);
                 user.setEmail(email);
+                user.setDisabled(Boolean.FALSE);
                 user.setUpdatedAt(System.currentTimeMillis());
                 user.setUpdatedBy(userId);
 
@@ -80,9 +88,8 @@ public class SecurityConfiguration {
 
             if (!CollectionUtils.isEmpty(admins) && admins.contains(email)) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            } else {
-                throw new DisabledException("Disabled");
             }
+
             return new DefaultUser(
                     user.getId(), authorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
         };

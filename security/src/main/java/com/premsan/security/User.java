@@ -22,6 +22,8 @@ public class User {
 
     @Column private String email;
 
+    @Column private Boolean disabled;
+
     @Column private Long updatedAt;
 
     @Column private String updatedBy;
