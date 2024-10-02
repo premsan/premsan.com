@@ -5,10 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Blog View</h1>
-<p th:text="'id: ' + ${blog.id}" />
-<p th:text="'title: ' + ${blog.title}" />
-<p th:text="'content: ' + ${blog.content}" />
+<h3 th:text="${blog.title}"/>
+[(${blog.content})]
 <a href="/blogs/create">create another blog</a>
 </body>
 </html>

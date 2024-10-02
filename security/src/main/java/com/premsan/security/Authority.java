@@ -1,4 +1,4 @@
-package com.premsan.blog24;
+package com.premsan.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +11,16 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "blogs")
-public class Blog {
+@Table(name = "authorities")
+public class Authority {
 
     @Id private String id;
 
     @Version private Long version;
 
-    @Column private String title;
+    @Column private String name;
 
-    @Column private String content;
+    @Column private Long updatedAt;
+
+    @Column private String updatedBy;
 }
