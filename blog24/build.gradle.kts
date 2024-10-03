@@ -30,7 +30,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:3.5.0")
 	implementation("org.liquibase:liquibase-core")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	implementation("org.asciidoctor:asciidoctorj:3.0.0")
