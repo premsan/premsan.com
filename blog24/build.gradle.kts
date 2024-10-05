@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+	implementation(project(":ui"))
 	implementation(project(":security"))
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")

@@ -26,10 +26,6 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.asciidoctor:asciidoctorj:3.0.0")
 
-    implementation("org.webjars.npm:htmx.org:2.0.2")
-    implementation("org.webjars.npm:missing.css:1.1.3")
-    implementation("org.webjars:font-awesome:6.5.2")
-
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
@@ -45,8 +41,13 @@ tasks.test {
 }
 
 spotless {
+    format("html") {
+        target("src/**/templates/**/*.html")
+        prettier().config(mapOf("tabWidth" to 4))
+    }
     java {
         googleJavaFormat("1.19.2").aosp().reflowLongStrings().skipJavadocFormatting()
         formatAnnotations()
     }
+
 }

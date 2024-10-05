@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="head-fragment :: head"></head>
+
+    <body id="top">
+        <main>
+            <form
+                method="POST"
+                th:object="${authority}"
+                th:action="@{/authority-create}"
+            >
+                <input type="text" th:field="*{name}" />
+
+                <button>Submit</button>
+            </form>
+
+            <button
+                th:fragment="content"
+                id="content"
+                hx-trigger="click"
+                th:hx-post="@{/authority-create}"
+            >
+                Another Button</button
+            ><br />
+        </main>
+
+        <footer th:fragment="footer"></footer>
+    </body>
+</html>
