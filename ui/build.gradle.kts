@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("com.diffplug.spotless")
 }
 
 group = "com.premsan"
@@ -16,4 +17,15 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+spotless {
+    format("html") {
+        target("src/**/templates/**/*.html")
+        prettier().config(mapOf("tabWidth" to 4))
+    }
+    java {
+        googleJavaFormat("1.19.2").aosp().reflowLongStrings().skipJavadocFormatting()
+        formatAnnotations()
+    }
 }

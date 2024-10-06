@@ -49,6 +49,10 @@ tasks.withType<Test> {
 }
 
 spotless {
+	format("html") {
+		target("src/**/templates/**/*.html")
+		prettier().config(mapOf("tabWidth" to 4))
+	}
 	java {
 		googleJavaFormat("1.19.2").aosp().reflowLongStrings().skipJavadocFormatting()
 		formatAnnotations()
