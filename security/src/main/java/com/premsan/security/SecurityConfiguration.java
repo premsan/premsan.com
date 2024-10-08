@@ -1,5 +1,6 @@
 package com.premsan.security;
 
+import com.premsan.security.authority.AuthorityRepository;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;

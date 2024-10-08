@@ -1,4 +1,4 @@
-package com.premsan.security;
+package com.premsan.security.authority;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

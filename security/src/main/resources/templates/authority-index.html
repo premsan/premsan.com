@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{head-fragment :: head}"></head>
+
+    <body id="top">
+        <main class="container">
+            <section class="section">
+                <form class="box" action="/authority-index-find-by-id">
+                    <div class="field">
+                        <label class="label">Find by id</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                type="text"
+                                name="id"
+                                placeholder="enter authority id"
+                            />
+                        </div>
+                    </div>
+                    <button class="button is-primary">Find</button>
+                </form>
+                <form class="box" action="/authority-index-find-by-name">
+                    <div class="field">
+                        <label class="label">Find by name</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                type="text"
+                                name="name"
+                                placeholder="enter authority name"
+                            />
+                        </div>
+                    </div>
+                    <button class="button is-primary">Find</button>
+                </form>
+            </section>
+            <section class="section">
+                <div class="box" th:each="authority : ${authorities}">
+                    <div th:text="${authority.id}">authority.id</div>
+                    <div th:text="${authority.version}">authority.version</div>
+                    <div th:text="${authority.name}">authority.name</div>
+                    <div th:text="${authority.updatedAt}">
+                        authority.updatedAt
+                    </div>
+                    <div th:text="${authority.updatedBy}">
+                        authority.updatedBy
+                    </div>
+                </div>
+                <nav
+                    class="pagination is-centered"
+                    role="navigation"
+                    aria-label="pagination"
+                >
+                    <ul class="pagination-list">
+                        <li>
+                            <a
+                                href="#"
+                                class="pagination-link"
+                                aria-label="Goto page 1"
+                                >1</a
+                            >
+                        </li>
+                        <li>
+                            <span class="pagination-ellipsis">&hellip;</span>
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="pagination-link"
+                                aria-label="Goto page 45"
+                                >45</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                class="pagination-link is-current"
+                                aria-label="Page 46"
+                                aria-current="page"
+                                >46</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="pagination-link"
+                                aria-label="Goto page 47"
+                                >47</a
+                            >
+                        </li>
+                        <li>
+                            <span class="pagination-ellipsis">&hellip;</span>
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="pagination-link"
+                                aria-label="Goto page 86"
+                                >86</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+        </main>
+    </body>
+</html>
