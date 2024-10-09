@@ -1,6 +1,8 @@
 package com.premsan.security.authority;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -8,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -19,31 +20,45 @@ public class AuthorityIndexController {
 
     @GetMapping("/authority-index")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView getAuthorityIndex(
-            @RequestParam(required = false) final String id,
-            @RequestParam(required = false) final String name,
-            @RequestParam(defaultValue = "0") final Integer page) {
+    public ModelAndView getAuthorityIndex(final RequestParams requestParams) {
 
         final ModelAndView modelAndView = new ModelAndView("authority-index");
 
         Page<Authority> authorityPage;
 
-        if (StringUtils.hasText(id)) {
+        if (StringUtils.hasText(requestParams.getId())) {
 
             authorityPage =
-                    authorityRepository.findById(id, PageRequest.of(page, 100, Sort.by("id")));
-        } else if (StringUtils.hasText(name)) {
+                    authorityRepository.findById(
+                            requestParams.getId(),
+                            PageRequest.of(requestParams.getPage(), 3, Sort.by("id")));
+        } else if (StringUtils.hasText(requestParams.getName())) {
 
             authorityPage =
                     authorityRepository.findByName(
-                            name, PageRequest.of(page, 100, Sort.by("name")));
+                            requestParams.getName(),
+                            PageRequest.of(requestParams.getPage(), 3, Sort.by("name")));
         } else {
 
-            authorityPage = authorityRepository.findAll(PageRequest.of(page, 100, Sort.by("id")));
+            authorityPage =
+                    authorityRepository.findAll(
+                            PageRequest.of(requestParams.getPage(), 3, Sort.by("id")));
         }
 
+        modelAndView.addObject("requestParams", requestParams);
         modelAndView.addObject("authorityPage", authorityPage);
 
         return modelAndView;
+    }
+
+    @Getter
+    @Setter
+    public static class RequestParams {
+
+        private String id;
+
+        private String name;
+
+        private Integer page = 0;
     }
 }
