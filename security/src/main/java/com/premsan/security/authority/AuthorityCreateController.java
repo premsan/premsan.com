@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-public class AuthorityController {
+public class AuthorityCreateController {
 
     private final AuthorityRepository authorityRepository;
 
