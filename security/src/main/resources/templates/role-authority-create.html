@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{head-fragment}"></head>
+
+    <body id="top">
+        <main class="container">
+            <form
+                method="post"
+                th:object="${roleAuthority}"
+                th:hx-post="@{/role-authority-create}"
+            >
+                <div class="field">
+                    <label class="label">Authority Id</label>
+
+                    <div class="control">
+                        <input
+                            class="input"
+                            type="text"
+                            th:field="*{authorityId}"
+                            placeholder="Authority id input"
+                        />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Role Id</label>
+
+                    <div class="control">
+                        <input
+                            class="input"
+                            type="text"
+                            th:field="*{roleId}"
+                            placeholder="Authority id input"
+                        />
+                    </div>
+                </div>
+
+                <div
+                    class="control field"
+                    th:if="${not #sets.isEmpty(roleAuthority.errors)}"
+                >
+                    <th:block th:each="error : ${roleAuthority.errors}">
+                        <p class="help is-danger" th:text="${error}">
+                            ERROR_CODE
+                        </p>
+                    </th:block>
+                </div>
+
+                <div class="control">
+                    <button type="submit" class="button is-primary">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>
