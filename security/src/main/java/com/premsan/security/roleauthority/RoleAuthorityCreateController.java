@@ -74,7 +74,7 @@ public class RoleAuthorityCreateController {
 
         if (!roleAuthorityCreate.getErrors().isEmpty()) {
 
-            modelAndView.setViewName("role-authority-create-page");
+            modelAndView.setViewName("role-authority-create-fragment");
             modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
             return modelAndView;
@@ -90,7 +90,7 @@ public class RoleAuthorityCreateController {
                                 System.currentTimeMillis(),
                                 securityContext.getAuthentication().getName()));
 
-        modelAndView.setViewName("role-authority-show-page");
+        modelAndView.setViewName("role-authority-show-fragment");
         modelAndView.addObject("roleAuthority", roleAuthority);
 
         return modelAndView;
