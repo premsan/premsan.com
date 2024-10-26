@@ -33,7 +33,7 @@ public class RoleAuthorityCreateController {
     @GetMapping("/role-authority-create")
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
-        final ModelAndView modelAndView = new ModelAndView("role-authority-create");
+        final ModelAndView modelAndView = new ModelAndView("role-authority-create-page");
         modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
         return modelAndView;
@@ -74,7 +74,7 @@ public class RoleAuthorityCreateController {
 
         if (!roleAuthorityCreate.getErrors().isEmpty()) {
 
-            modelAndView.setViewName("role-authority-create");
+            modelAndView.setViewName("role-authority-create-page");
             modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
             return modelAndView;
@@ -90,7 +90,7 @@ public class RoleAuthorityCreateController {
                                 System.currentTimeMillis(),
                                 securityContext.getAuthentication().getName()));
 
-        modelAndView.setViewName("role-authority-show");
+        modelAndView.setViewName("role-authority-show-page");
         modelAndView.addObject("roleAuthority", roleAuthority);
 
         return modelAndView;
