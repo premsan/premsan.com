@@ -5,7 +5,7 @@
     <body id="top">
         <main class="container">
             <section class="section">
-                <form hx-get="/authority-index">
+                <form action="/authority-index">
                     <div class="field">
                         <label class="label">Find by id</label>
                         <div class="control">
@@ -58,7 +58,6 @@
                     <ul class="pagination-list">
                         <li>
                             <form
-                                hx-boost="true"
                                 action="/authority-index"
                                 th:if="${authorityPage.hasNext()}"
                             >

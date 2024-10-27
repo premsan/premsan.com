@@ -4,8 +4,8 @@ import com.premsan.security.Role;
 import com.premsan.security.authority.Authority;
 import com.premsan.security.authority.AuthorityRepository;
 import com.premsan.security.role.RoleRepository;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +16,12 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class RoleAuthorityCreateController {
     @GetMapping("/role-authority-create")
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
-        final ModelAndView modelAndView = new ModelAndView("role-authority-create-page");
+        final ModelAndView modelAndView = new ModelAndView("role-authority-create");
         modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
         return modelAndView;
@@ -42,10 +45,12 @@ public class RoleAuthorityCreateController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/role-authority-create")
     public ModelAndView postCreate(
-            final RoleAuthorityCreate roleAuthorityCreate,
-            @CurrentSecurityContext SecurityContext securityContext) {
+            @Valid @ModelAttribute("roleAuthority") RoleAuthorityCreate roleAuthorityCreate,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            @CurrentSecurityContext final SecurityContext securityContext) {
 
-        final ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
 
         Role role = null;
 
@@ -56,7 +61,8 @@ public class RoleAuthorityCreateController {
 
         if (role == null) {
 
-            roleAuthorityCreate.getErrors().add(RoleAuthorityCreate.Error.INVALID_ROLE_ID);
+            //
+            // roleAuthorityCreate.setRoleIdError(RoleAuthorityCreate.Error.INVALID_ROLE_ID);
         }
 
         Authority authority = null;
@@ -69,12 +75,13 @@ public class RoleAuthorityCreateController {
 
         if (authority == null) {
 
-            roleAuthorityCreate.getErrors().add(RoleAuthorityCreate.Error.INVALID_AUTHORITY_ID);
+            //
+            // roleAuthorityCreate.setAuthorityIdError(RoleAuthorityCreate.Error.INVALID_AUTHORITY_ID);
         }
 
-        if (!roleAuthorityCreate.getErrors().isEmpty()) {
+        if (bindingResult.hasErrors()) {
 
-            modelAndView.setViewName("role-authority-create-fragment");
+            modelAndView.setViewName("role-authority-create");
             modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
             return modelAndView;
@@ -90,10 +97,8 @@ public class RoleAuthorityCreateController {
                                 System.currentTimeMillis(),
                                 securityContext.getAuthentication().getName()));
 
-        modelAndView.setViewName("role-authority-show-fragment");
-        modelAndView.addObject("roleAuthority", roleAuthority);
-
-        return modelAndView;
+        redirectAttributes.addAttribute("id", roleAuthority.getId());
+        return new ModelAndView("redirect:/role-authority-view/{id}");
     }
 
     @Getter
@@ -101,11 +106,15 @@ public class RoleAuthorityCreateController {
     @NoArgsConstructor
     public class RoleAuthorityCreate {
 
+        @NotEmpty(message = "INVALID_AUTHORITY_ID")
         private String authorityId;
 
+        private Error authorityIdError;
+
+        @NotEmpty(message = "INVALID_AUTHORITY_ID")
         private String roleId;
 
-        private Set<Error> errors = new HashSet<>();
+        private Error roleIdError;
 
         enum Error {
             INVALID_AUTHORITY_ID,
