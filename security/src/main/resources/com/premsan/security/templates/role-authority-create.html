@@ -6,7 +6,7 @@
             <form
                 xmlns:th="http://www.thymeleaf.org"
                 th:fragment="role-authority-create-fragment"
-                th:object="${roleAuthority}"
+                th:object="${roleAuthorityCreate}"
                 th:action="@{/role-authority-create}"
                 method="post"
             >
@@ -38,7 +38,7 @@
                             class="input"
                             type="text"
                             th:field="*{roleId}"
-                            placeholder="Authority id input"
+                            placeholder="Role Id input"
                         />
                     </div>
                     <ul>

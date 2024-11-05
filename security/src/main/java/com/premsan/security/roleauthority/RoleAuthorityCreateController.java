@@ -15,7 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,7 +36,7 @@ public class RoleAuthorityCreateController {
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
         final ModelAndView modelAndView = new ModelAndView("com/premsan/security/templates/role-authority-create");
-        modelAndView.addObject("roleAuthority", roleAuthorityCreate);
+        modelAndView.addObject("roleAuthorityCreate", roleAuthorityCreate);
 
         return modelAndView;
     }
@@ -45,45 +44,39 @@ public class RoleAuthorityCreateController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/role-authority-create")
     public ModelAndView postCreate(
-            @Valid @ModelAttribute("roleAuthority") RoleAuthorityCreate roleAuthorityCreate,
+            @Valid @ModelAttribute("roleAuthorityCreate") RoleAuthorityCreate roleAuthorityCreate,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             @CurrentSecurityContext final SecurityContext securityContext) {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        Role role = null;
+        if (bindingResult.hasErrors()) {
 
-        if (StringUtils.hasText(roleAuthorityCreate.getRoleId())) {
+            modelAndView.setViewName("com/premsan/security/templates/role-authority-create");
+            modelAndView.addObject("roleAuthorityCreate", roleAuthorityCreate);
 
-            role = roleRepository.findById(roleAuthorityCreate.getRoleId()).orElse(null);
+            return modelAndView;
         }
+
+        final Role role = roleRepository.findById(roleAuthorityCreate.getRoleId()).orElse(null);
 
         if (role == null) {
 
-            bindingResult.rejectValue("roleId", "INVALID_ROLE_ID");
-            //
-            // roleAuthorityCreate.setRoleIdError(RoleAuthorityCreate.Error.INVALID_ROLE_ID);
+            bindingResult.rejectValue("roleId", "Invalid");
         }
 
-        Authority authority = null;
-
-        if (StringUtils.hasText(roleAuthorityCreate.getAuthorityId())) {
-
-            authority =
-                    authorityRepository.findById(roleAuthorityCreate.getAuthorityId()).orElse(null);
-        }
+        final Authority authority  = authorityRepository.findById(roleAuthorityCreate.getAuthorityId()).orElse(null);
 
         if (authority == null) {
 
-            //
-            // roleAuthorityCreate.setAuthorityIdError(RoleAuthorityCreate.Error.INVALID_AUTHORITY_ID);
+            bindingResult.rejectValue("authorityId", "Invalid");
         }
 
         if (bindingResult.hasErrors()) {
 
             modelAndView.setViewName("com/premsan/security/templates/role-authority-create");
-            modelAndView.addObject("roleAuthority", roleAuthorityCreate);
+            modelAndView.addObject("roleAuthorityCreate", roleAuthorityCreate);
 
             return modelAndView;
         }
@@ -107,19 +100,10 @@ public class RoleAuthorityCreateController {
     @NoArgsConstructor
     public class RoleAuthorityCreate {
 
-        @NotEmpty(message = "EMPTY_AUTHORITY_ID")
-        private String authorityId;
-
-        private Error authorityIdError;
-
-        @NotEmpty(message = "EMPTY_ROLE_ID")
+        @NotEmpty
         private String roleId;
 
-        private Error roleIdError;
-
-        enum Error {
-            INVALID_AUTHORITY_ID,
-            INVALID_ROLE_ID
-        }
+        @NotEmpty
+        private String authorityId;
     }
 }

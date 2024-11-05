@@ -31,7 +31,7 @@ import org.springframework.util.CollectionUtils;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+//@EnableMethodSecurity
 public class SecurityConfiguration {
 
     @Bean
