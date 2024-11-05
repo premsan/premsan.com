@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{head-fragment}"></head>
+    <head th:replace="~{com/premsan/ui/templates/head-fragment}"></head>
     <body>
         <section class="section">
             <form
@@ -21,9 +21,13 @@
                             placeholder="Authority id input"
                         />
                     </div>
-                    <p class="help is-danger" th:text="*{authorityIdError}">
-                        Authority Id Error
-                    </p>
+                    <ul>
+                        <li
+                                th:each="err : ${#fields.errors('authorityId')}"
+                                th:text="${err}"
+                                class="help is-danger"
+                        />
+                    </ul>
                 </div>
 
                 <div class="field">
@@ -41,7 +45,7 @@
                         <li
                             th:each="err : ${#fields.errors('roleId')}"
                             th:text="${err}"
-                            class="error"
+                            class="help is-danger"
                         />
                     </ul>
                 </div>

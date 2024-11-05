@@ -36,7 +36,7 @@ public class RoleAuthorityCreateController {
     @GetMapping("/role-authority-create")
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
-        final ModelAndView modelAndView = new ModelAndView("role-authority-create");
+        final ModelAndView modelAndView = new ModelAndView("com/premsan/security/templates/role-authority-create");
         modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
         return modelAndView;
@@ -61,6 +61,7 @@ public class RoleAuthorityCreateController {
 
         if (role == null) {
 
+            bindingResult.rejectValue("roleId", "INVALID_ROLE_ID");
             //
             // roleAuthorityCreate.setRoleIdError(RoleAuthorityCreate.Error.INVALID_ROLE_ID);
         }
@@ -81,7 +82,7 @@ public class RoleAuthorityCreateController {
 
         if (bindingResult.hasErrors()) {
 
-            modelAndView.setViewName("role-authority-create");
+            modelAndView.setViewName("com/premsan/security/templates/role-authority-create");
             modelAndView.addObject("roleAuthority", roleAuthorityCreate);
 
             return modelAndView;
@@ -106,12 +107,12 @@ public class RoleAuthorityCreateController {
     @NoArgsConstructor
     public class RoleAuthorityCreate {
 
-        @NotEmpty(message = "INVALID_AUTHORITY_ID")
+        @NotEmpty(message = "EMPTY_AUTHORITY_ID")
         private String authorityId;
 
         private Error authorityIdError;
 
-        @NotEmpty(message = "INVALID_AUTHORITY_ID")
+        @NotEmpty(message = "EMPTY_ROLE_ID")
         private String roleId;
 
         private Error roleIdError;

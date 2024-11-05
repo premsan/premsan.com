@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - includeAll:
+      path: com/premsan/security/db/changelog
+  - includeAll:
+      path: com/premsan/blog24/db/changelog
