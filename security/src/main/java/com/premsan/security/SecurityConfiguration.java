@@ -1,5 +1,8 @@
 package com.premsan.security;
 
+import com.premsan.security.authority.AuthorityRepository;
+import com.premsan.security.user.User;
+import com.premsan.security.user.UserRepository;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +28,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 import org.springframework.util.CollectionUtils;
 
@@ -37,6 +41,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
 
         return http.oauth2Login(Customizer.withDefaults())
+                .csrf(
+                        httpSecurityCsrfConfigurer ->
+                                httpSecurityCsrfConfigurer.csrfTokenRepository(
+                                        new CookieCsrfTokenRepository()))
+                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
                 .rememberMe((rememberMe) -> rememberMe.rememberMeServices(rememberMeServices()))
                 .build();
     }

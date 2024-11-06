@@ -20,6 +20,7 @@ dependencies {
     api("org.springframework.session:spring-session-core")
     api("org.springframework.session:spring-session-jdbc")
 
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
