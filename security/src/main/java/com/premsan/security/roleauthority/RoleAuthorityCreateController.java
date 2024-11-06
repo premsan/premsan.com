@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,7 +33,7 @@ public class RoleAuthorityCreateController {
     private final RoleAuthorityRepository roleAuthorityRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/role-authority-create")
+    @GetMapping("/security/role-authority-create")
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
         final ModelAndView modelAndView = new ModelAndView("com/premsan/security/templates/role-authority-create");
@@ -42,7 +43,7 @@ public class RoleAuthorityCreateController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/role-authority-create")
+    @PostMapping("/security/role-authority-create")
     public ModelAndView postCreate(
             @Valid @ModelAttribute("roleAuthorityCreate") RoleAuthorityCreate roleAuthorityCreate,
             BindingResult bindingResult,
@@ -51,26 +52,30 @@ public class RoleAuthorityCreateController {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (bindingResult.hasErrors()) {
+        Role role = null;
 
-            modelAndView.setViewName("com/premsan/security/templates/role-authority-create");
-            modelAndView.addObject("roleAuthorityCreate", roleAuthorityCreate);
+        if (StringUtils.hasText(roleAuthorityCreate.getRoleId())) {
 
-            return modelAndView;
+            role = roleRepository.findById(roleAuthorityCreate.getRoleId()).orElse(null);
+
+            if (role == null) {
+
+                bindingResult.rejectValue("roleId", "Invalid");
+            }
+
         }
 
-        final Role role = roleRepository.findById(roleAuthorityCreate.getRoleId()).orElse(null);
+        Authority authority = null;
 
-        if (role == null) {
+        if (StringUtils.hasText(roleAuthorityCreate.getAuthorityId())) {
 
-            bindingResult.rejectValue("roleId", "Invalid");
-        }
+            authority =
+                    authorityRepository.findById(roleAuthorityCreate.getAuthorityId()).orElse(null);
 
-        final Authority authority  = authorityRepository.findById(roleAuthorityCreate.getAuthorityId()).orElse(null);
+            if (authority == null) {
 
-        if (authority == null) {
-
-            bindingResult.rejectValue("authorityId", "Invalid");
+                bindingResult.rejectValue("authorityId", "Invalid");
+            }
         }
 
         if (bindingResult.hasErrors()) {
