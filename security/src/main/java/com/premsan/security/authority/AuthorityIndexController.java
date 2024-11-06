@@ -18,11 +18,12 @@ public class AuthorityIndexController {
 
     private final AuthorityRepository authorityRepository;
 
-    @GetMapping("/authority-index")
+    @GetMapping("/security/authority-index")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView getAuthorityIndex(final RequestParams requestParams) {
 
-        final ModelAndView modelAndView = new ModelAndView("authority-index");
+        final ModelAndView modelAndView =
+                new ModelAndView("com/premsan/security/templates/authority-index");
 
         Page<Authority> authorityPage;
 

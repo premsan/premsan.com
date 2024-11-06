@@ -1,5 +1,7 @@
-package com.premsan.security.authority;
+package com.premsan.security.role;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,57 +20,57 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-public class AuthorityCreateController {
+public class RoleCreateController {
 
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
-    @GetMapping("/security/authority-create")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView getCreate() {
+    @GetMapping("/security/role-create")
+    public ModelAndView getCreate(final RoleCreate roleCreate) {
 
         final ModelAndView modelAndView =
-                new ModelAndView("com/premsan/security/templates/authority-create");
-        modelAndView.addObject("authorityCreate", new AuthorityCreate());
+                new ModelAndView("com/premsan/security/templates/role-create");
+        modelAndView.addObject("roleCreate", roleCreate);
 
         return modelAndView;
     }
 
-    @PostMapping("/security/authority-create")
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/security/role-create")
     public ModelAndView postCreate(
-            @ModelAttribute("authorityCreate") AuthorityCreate authorityCreate,
+            @Valid @ModelAttribute("roleCreate") RoleCreate roleCreate,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
-            @CurrentSecurityContext SecurityContext securityContext) {
+            @CurrentSecurityContext final SecurityContext securityContext) {
 
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
 
-            modelAndView.setViewName("com/premsan/security/templates/authority-create");
-            modelAndView.addObject("authorityCreate", authorityCreate);
+            modelAndView.setViewName("com/premsan/security/templates/role-create");
+            modelAndView.addObject("roleCreate", roleCreate);
 
             return modelAndView;
         }
 
-        final Authority authority =
-                authorityRepository.save(
-                        new Authority(
+        final Role role =
+                roleRepository.save(
+                        new Role(
                                 UUID.randomUUID().toString(),
                                 null,
-                                authorityCreate.getName(),
+                                roleCreate.getName(),
                                 System.currentTimeMillis(),
                                 securityContext.getAuthentication().getName()));
 
-        redirectAttributes.addAttribute("id", authority.getId());
-        return new ModelAndView("redirect:/security/authority-view/{id}");
+        redirectAttributes.addAttribute("id", role.getId());
+        return new ModelAndView("redirect:/security/role-view/{id}");
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class AuthorityCreate {
+    public class RoleCreate {
 
-        private String name;
+        @NotEmpty private String name;
     }
 }

@@ -1,4 +1,4 @@
-package com.premsan.security;
+package com.premsan.security.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

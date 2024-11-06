@@ -6,17 +6,17 @@
         <section class="section">
             <form
                 method="post"
-                th:object="${authorityCreate}"
-                th:action="@{/security/authority-create}"
+                th:object="${roleCreate}"
+                th:action="@{/security/role-create}"
             >
                 <div class="field">
-                    <label class="label">Authority name</label>
+                    <label class="label">Role name</label>
                     <div class="control">
                         <input
                             class="input"
                             type="text"
                             th:field="*{name}"
-                            placeholder="Authority name input"
+                            placeholder="Role name input"
                         />
                     </div>
                     <ul>

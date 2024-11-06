@@ -15,7 +15,7 @@ public class RoleAuthorityShowController {
     private final RoleAuthorityRepository roleAuthorityRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/role-authority-view/{id}")
+    @GetMapping("/security/role-authority-view/{id}")
     public ModelAndView getCreate(@PathVariable final String id) {
 
         Optional<RoleAuthority> roleAuthorityOptional = roleAuthorityRepository.findById(id);
@@ -25,7 +25,8 @@ public class RoleAuthorityShowController {
             return new ModelAndView("not-found");
         }
 
-        final ModelAndView modelAndView = new ModelAndView("role-authority-view");
+        final ModelAndView modelAndView =
+                new ModelAndView("com/premsan/security/templates/role-authority-view");
         modelAndView.addObject("roleAuthority", roleAuthorityOptional.get());
 
         return modelAndView;

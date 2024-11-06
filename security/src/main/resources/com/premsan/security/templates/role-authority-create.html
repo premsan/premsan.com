@@ -4,8 +4,6 @@
     <body>
         <section class="section">
             <form
-                xmlns:th="http://www.thymeleaf.org"
-                th:fragment="role-authority-create-fragment"
                 th:object="${roleAuthorityCreate}"
                 th:action="@{/security/role-authority-create}"
                 method="post"
@@ -23,9 +21,9 @@
                     </div>
                     <ul>
                         <li
-                                th:each="err : ${#fields.errors('authorityId')}"
-                                th:text="${err}"
-                                class="help is-danger"
+                            th:each="error : ${#fields.errors('authorityId')}"
+                            th:text="${error}"
+                            class="help is-danger"
                         />
                     </ul>
                 </div>
@@ -43,8 +41,8 @@
                     </div>
                     <ul>
                         <li
-                            th:each="err : ${#fields.errors('roleId')}"
-                            th:text="${err}"
+                            th:each="error : ${#fields.errors('roleId')}"
+                            th:text="${error}"
                             class="help is-danger"
                         />
                     </ul>

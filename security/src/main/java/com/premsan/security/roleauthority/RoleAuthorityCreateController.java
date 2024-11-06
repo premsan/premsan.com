@@ -1,8 +1,8 @@
 package com.premsan.security.roleauthority;
 
-import com.premsan.security.Role;
 import com.premsan.security.authority.Authority;
 import com.premsan.security.authority.AuthorityRepository;
+import com.premsan.security.role.Role;
 import com.premsan.security.role.RoleRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,7 +36,8 @@ public class RoleAuthorityCreateController {
     @GetMapping("/security/role-authority-create")
     public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
-        final ModelAndView modelAndView = new ModelAndView("com/premsan/security/templates/role-authority-create");
+        final ModelAndView modelAndView =
+                new ModelAndView("com/premsan/security/templates/role-authority-create");
         modelAndView.addObject("roleAuthorityCreate", roleAuthorityCreate);
 
         return modelAndView;
@@ -62,7 +63,6 @@ public class RoleAuthorityCreateController {
 
                 bindingResult.rejectValue("roleId", "Invalid");
             }
-
         }
 
         Authority authority = null;
@@ -97,7 +97,7 @@ public class RoleAuthorityCreateController {
                                 securityContext.getAuthentication().getName()));
 
         redirectAttributes.addAttribute("id", roleAuthority.getId());
-        return new ModelAndView("redirect:/role-authority-view/{id}");
+        return new ModelAndView("redirect:/security/role-authority-view/{id}");
     }
 
     @Getter
@@ -105,10 +105,8 @@ public class RoleAuthorityCreateController {
     @NoArgsConstructor
     public class RoleAuthorityCreate {
 
-        @NotEmpty
-        private String roleId;
+        @NotEmpty private String roleId;
 
-        @NotEmpty
-        private String authorityId;
+        @NotEmpty private String authorityId;
     }
 }

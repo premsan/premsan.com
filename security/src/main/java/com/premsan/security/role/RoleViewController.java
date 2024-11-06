@@ -1,4 +1,4 @@
-package com.premsan.security.authority;
+package com.premsan.security.role;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -10,24 +10,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-public class AuthorityViewController {
+public class RoleViewController {
 
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
-    @GetMapping("/security/authority-view/{id}")
+    @GetMapping("/security/role-view/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView getCreate(@PathVariable String id) {
 
-        final Optional<Authority> optionalAuthority = authorityRepository.findById(id);
+        final Optional<Role> optionalRole = roleRepository.findById(id);
 
-        if (optionalAuthority.isEmpty()) {
+        if (optionalRole.isEmpty()) {
 
             return new ModelAndView("not-found");
         }
 
         final ModelAndView modelAndView =
-                new ModelAndView("com/premsan/security/templates/authority-view");
-        modelAndView.addObject("authority", optionalAuthority.get());
+                new ModelAndView("com/premsan/security/templates/role-view");
+        modelAndView.addObject("role", optionalRole.get());
 
         return modelAndView;
     }

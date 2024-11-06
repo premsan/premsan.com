@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +30,7 @@ import org.springframework.util.CollectionUtils;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity
+// @EnableMethodSecurity
 public class SecurityConfiguration {
 
     @Bean
