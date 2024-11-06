@@ -1,5 +1,7 @@
 package com.premsan.security.authority;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,7 @@ public class AuthorityCreateController {
     @PostMapping("/security/authority-create")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView postCreate(
-            @ModelAttribute("authorityCreate") AuthorityCreate authorityCreate,
+            @Valid @ModelAttribute("authorityCreate") AuthorityCreate authorityCreate,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             @CurrentSecurityContext SecurityContext securityContext) {
@@ -69,6 +71,6 @@ public class AuthorityCreateController {
     @NoArgsConstructor
     public static class AuthorityCreate {
 
-        private String name;
+        @NotBlank private String name;
     }
 }

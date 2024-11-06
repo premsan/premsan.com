@@ -5,7 +5,7 @@ import com.premsan.security.authority.AuthorityRepository;
 import com.premsan.security.role.Role;
 import com.premsan.security.role.RoleRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -105,8 +105,8 @@ public class RoleAuthorityCreateController {
     @NoArgsConstructor
     public class RoleAuthorityCreate {
 
-        @NotEmpty private String roleId;
+        @NotBlank private String roleId;
 
-        @NotEmpty private String authorityId;
+        @NotBlank private String authorityId;
     }
 }

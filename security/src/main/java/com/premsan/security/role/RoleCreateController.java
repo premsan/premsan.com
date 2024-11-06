@@ -1,7 +1,7 @@
 package com.premsan.security.role;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -71,6 +71,6 @@ public class RoleCreateController {
     @NoArgsConstructor
     public class RoleCreate {
 
-        @NotEmpty private String name;
+        @NotBlank private String name;
     }
 }
