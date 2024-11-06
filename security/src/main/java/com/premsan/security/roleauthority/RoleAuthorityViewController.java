@@ -10,13 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-public class RoleAuthorityShowController {
+public class RoleAuthorityViewController {
 
     private final RoleAuthorityRepository roleAuthorityRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/security/role-authority-view/{id}")
-    public ModelAndView getCreate(@PathVariable final String id) {
+    public ModelAndView getRoleAuthorityView(@PathVariable final String id) {
 
         Optional<RoleAuthority> roleAuthorityOptional = roleAuthorityRepository.findById(id);
 

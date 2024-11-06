@@ -1,4 +1,4 @@
-package com.premsan.security;
+package com.premsan.security.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,15 +8,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class UserIndexController {
 
     private final UserRepository userRepository;
 
-    @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView index() {
+    @GetMapping("/security/user-index")
+    public ModelAndView getUserIndex() {
 
-        final ModelAndView modelAndView = new ModelAndView("user-list");
+        final ModelAndView modelAndView =
+                new ModelAndView("com/premsan/security/templates/user-index");
         modelAndView.addObject("users", userRepository.findAll());
 
         return modelAndView;

@@ -34,7 +34,7 @@ public class RoleAuthorityCreateController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/security/role-authority-create")
-    public ModelAndView getCreate(final RoleAuthorityCreate roleAuthorityCreate) {
+    public ModelAndView getRoleAuthorityCreate(final RoleAuthorityCreate roleAuthorityCreate) {
 
         final ModelAndView modelAndView =
                 new ModelAndView("com/premsan/security/templates/role-authority-create");
@@ -45,7 +45,7 @@ public class RoleAuthorityCreateController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/security/role-authority-create")
-    public ModelAndView postCreate(
+    public ModelAndView postRoleAuthorityCreate(
             @Valid @ModelAttribute("roleAuthorityCreate") RoleAuthorityCreate roleAuthorityCreate,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,

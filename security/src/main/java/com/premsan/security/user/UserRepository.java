@@ -1,4 +1,4 @@
-package com.premsan.security;
+package com.premsan.security.user;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
